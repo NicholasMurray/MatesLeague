@@ -1,31 +1,25 @@
-var ratPack = $.sammy(function() {
 
-    this.element_selector = '#content';
+function renderResults(data) {
 
-    $(function() {
-	  ratPack.run('#/view_league');
-	});
-    
-    // routes
-	this.get('#/view_league', function(context) {
-	    context.app.swap('');
-	    context.$element().append('<h1>View League</h1>');
-	});
+	var tpl = "<span>Latest Results</span>";
 
-	this.get('#/create_league', function(context) {
-	    context.app.swap('');
-	    context.$element().append('<h1>Create League</h1>');
-	});
+	tpl += "{{#results}}<div class='result_table clear'><span class='home_team'>{{HomeTeam}} </span><span class='score'>{{HomeScore}} - " +
+	          "{{AwayScore}}</span><span class='away_team'>{{AwayTeam}}</span></div>{{/results}}";
 
-	this.get('#/edit_league', function(context) {
-	    context.app.swap('');
-	    context.$element().append('<h1>Edit League</h1>');
-	});
+	var html = Mustache.to_html(tpl, data);
+	$('#current_results').html(html);
+}
 
-	this.get('#/delete_league', function(context) {
-	    context.app.swap('');
-	    context.$element().append('<h1>Delete League</h1>');
-	});
 
-});
+function renderLeague(data) {
 
+	var tpl = "<span>Latest League</span>";
+
+	tpl += "<leaguetable id='leaguetable'><ul><li>Pos</li><li>Team</li><li>P</li><li>GD</li><li>Pts</li></ul><leaguetable>";
+
+	tpl += "{{#league}}<div class='league_table clear'><span class='pos'>{{Pos}}</span><span class='team'>{{Team}}" +
+	          "</span><span class='played'>{{P}}</span><span class='gd'>{{GD}}</span><span class='pts'>{{Pts}}</span></div>{{/league}}";
+
+	var html = Mustache.to_html(tpl, data);
+	$('#current_league').html(html);
+}

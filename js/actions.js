@@ -1,5 +1,5 @@
 
-function renderResults(data) {
+function renderResults(data, container) {
 
 	var tpl = "<span>Latest Results</span>";
 
@@ -7,19 +7,22 @@ function renderResults(data) {
 	          "{{AwayScore}}</span><span class='away_team'>{{AwayTeam}}</span></div>{{/results}}";
 
 	var html = Mustache.to_html(tpl, data);
-	$('#current_results').html(html);
+	$(container).html(html);
 }
 
 
-function renderLeague(data) {
+function renderLeague(data, container) {
+
+	convertResultsToLeague(data);
 
 	var tpl = "<span>Latest League</span>";
 
-	tpl += "<leaguetable id='leaguetable'><ul><li>Pos</li><li>Team</li><li>P</li><li>GD</li><li>Pts</li></ul><leaguetable>";
+	tpl += "<div class='clear'><span class='pos'>Pos</span><span class='team'>Team</span>" +
+			"<span class='played'>P</span><span class='gd'>GD</span><span class='pts'>Pts</span><div>";
 
-	tpl += "{{#league}}<div class='league_table clear'><span class='pos'>{{Pos}}</span><span class='team'>{{Team}}" +
-	          "</span><span class='played'>{{P}}</span><span class='gd'>{{GD}}</span><span class='pts'>{{Pts}}</span></div>{{/league}}";
+	tpl += "{{#league}}<div class='league_table clear'><span class='pos'>{{Pos}}</span><span class='team'>{{Team}}</span>" +
+	          "<span class='played'>{{P}}</span><span class='gd'>{{GD}}</span><span class='pts'>{{Pts}}</span></div>{{/league}}";
 
 	var html = Mustache.to_html(tpl, data);
-	$('#current_league').html(html);
+	$(container).html(html);
 }

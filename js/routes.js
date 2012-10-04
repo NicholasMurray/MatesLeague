@@ -11,14 +11,14 @@ var ratPack = $.sammy(function() {
 	    context.app.swap('');
 	    context.$element().append('<h1>View Results</h1>');
 
-	    renderResults(currentResults);
+	    renderResults(currentResults, '#league_and_results_container');
 	});
 
 	this.get('#/view_league', function(context) {
 	    context.app.swap('');
 	    context.$element().append('<h1>View League</h1>');
 
-	    renderLeague(currentLeague);
+	    renderLeague(currentLeague, '#league_and_results_container');
 	});
 
 	this.get('#/edit_league', function(context) {

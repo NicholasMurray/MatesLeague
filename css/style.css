@@ -21,9 +21,10 @@
 .pos { text-align: left; width: 40px; float: left; }
 .team { text-align: left; width: 160px; float: left; }
 .played { text-align: left; width: 40px; float: left; }
+.for { text-align: left; width: 40px; float: left; }
+.against { text-align: left; width: 40px; float: left; }
 .gd { text-align: left; width: 40px; float: left; }
 .pts { text-align: left; width: 40px; float: left; }
-
 
 .clear { clear: both; }
 

@@ -18,7 +18,7 @@ var ratPack = $.sammy(function() {
 	    context.app.swap('');
 	    context.$element().append('<h1>View League</h1>');
 
-	    renderLeague(currentLeague, '#league_and_results_container');
+	    renderLeague(currentResults, '#league_and_results_container');
 	});
 
 	this.get('#/edit_league', function(context) {

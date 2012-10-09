@@ -1,4 +1,15 @@
 
+function getCurrentResults() {
+	var data = localStorage.getItem("current");	
+
+	return data;
+}
+
+function setCurrentResults(data) {
+
+	localStorage.setItem("current", JSON.stringify(data));
+}
+
 function convertResultsToLeague(data) {
 
 	var teams = getDistinctTeams(data);
@@ -27,7 +38,6 @@ function getLeague(teams,data) {
     	league.push(leagueRow);
 	}
 
-
     var blnRowRead = false;
     var homeTeam = '';
     var awayTeam = '';
@@ -36,7 +46,6 @@ function getLeague(teams,data) {
 
 
 	for (var key in data) {
-   	
 	   var obj = data[key];
 
 	   for (var prop in obj) {
@@ -63,7 +72,6 @@ function getLeague(teams,data) {
 						league[l].Played = (league[l].Played + 1);
 						league[l].For = (league[l].For + homeScore);	   					
 						league[l].Against = (league[l].Against - awayScore);	   					
-						//league[l].GD = (league[l].For + league[l].Against);
 						league[l].Points = (league[l].Points + getHomePoints(homeScore, awayScore));
 	   				}
 	   			}
@@ -74,11 +82,9 @@ function getLeague(teams,data) {
 						league[l].Played = (league[l].Played + 1);
 						league[l].For = (league[l].For + awayScore);	   					
 						league[l].Against = (league[l].Against - homeScore);	   					
-						//league[l].GD = (league[l].For + league[l].Against);
 						league[l].Points = (league[l].Points + getAwayPoints(homeScore, awayScore));
 	   				}
 	   			}
-
 	   			blnRowRead = false;
 	   		}
 	   	}

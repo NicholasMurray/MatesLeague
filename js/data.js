@@ -1,4 +1,4 @@
-var currentResults = [
+/*var currentResults = [
 	{ 	
 		Id: 1,
 		HomeTeam: 'Villa',
@@ -39,3 +39,4 @@ var currentLeague = [
 	}
 	];
  
+*/

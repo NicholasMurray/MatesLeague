@@ -30,7 +30,7 @@ var ratPack = $.sammy(function() {
 	    if ((localStorage["current"] !== null) && (localStorage["current"] !== undefined)) {
 	    	currentResults = JSON.parse(localStorage["current"]);
 	    }
-	    
+
 	    var nextId = (currentResults.length + 1);
 
 	    currentResults.push({
@@ -41,25 +41,54 @@ var ratPack = $.sammy(function() {
 			AwayScore: parseInt(postData.away_score.toString())
 		});
 
-
-	    localStorage.clear(); 
 		localStorage.setItem('current',JSON.stringify(currentResults));
 
 	    renderResultsPost(currentResults, '#content');
 	});
 
+	this.get('#/view_leagues', function(context) {
+	    context.app.swap('');
+	    context.$element().append('<h1>View League</h1>');
 
-	this.get('#/view_league', function(context) {
+	    var leagues = [];
+
+	    for (i=0; i<=localStorage.length-1; i++)  
+	    {  
+	        key = localStorage.key(i);  
+	        leagues.push( { LeagueName: key.toString() } );
+	    } 
+
+	    renderLeagues(leagues, '#content');
+	});
+
+	this.get('#/view_league/:name', function(context) {
 	    context.app.swap('');
 	    context.$element().append('<h1>View League</h1>');
 
 	    var currentResults = [];
 	    if ((localStorage["current"] !== null) && (localStorage["current"] !== undefined)) {
-	    	currentResults = JSON.parse(localStorage["current"]);
+	    	currentResults = JSON.parse(localStorage[this.params["name"]]);
 	    }
 
 	    renderLeague(currentResults, '#content');
 	});
+
+	this.get('#/create_league', function(context) {
+	    context.app.swap('');
+	    context.$element().append('<h1>Create League</h1>');
+
+	    renderCreateLeague('#content');
+	});
+
+	this.post('#/create_league', function(context) {
+	    var postData = this.params;
+
+	    context.app.swap('');
+	    localStorage.setItem(postData.league_name,'[]');
+
+	    context.redirect('#/create_league');
+	});
+
 
 
 	this.get('#/edit_league', function(context) {

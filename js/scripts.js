@@ -1,3 +1,11 @@
+function comparePoints(a,b) {
+  if (a.Points > b.Points)
+     return -1;
+  if (a.Points < b.Points)
+    return 1;
+  return 0;
+}
+
 
 function getCurrentResults() {
 	var data = localStorage.getItem("current");	
@@ -89,6 +97,9 @@ function getLeague(teams,data) {
 	   		}
 	   	}
 	}
+
+	league.sort(comparePoints);
+
 	return league;
 }
 

@@ -1,18 +1,39 @@
 ﻿body {
-	margin: 0;
-	padding: 20px 0 0 0;
+	margin: 10px;
+	padding: 0 0 0 0;
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-#league_and_results_container ul
-{
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    width: 400px; 
+.nav {
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  background: white;
+  border: 1px solid #aaa;
+  padding-left: 0;
+}
+.nav ul {
+	-webkit-padding-start: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.nav li {
+  list-style: none;
+  border-top: 1px solid #aaa;
+  padding-left: 0; 
+  font-weight: bold; 
+}
+li.first {
+  border-top: 0;
+}
+.nav a {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  background: url(../images/arrow.png) no-repeat right center;
 }
 
-#league_and_results_container { }
 
 .home_team { text-align: right; width: 160px; float: left; }
 .score { text-align: center; width: 80px; float: left; }

@@ -7,6 +7,22 @@ var ratPack = $.sammy(function() {
 	  ratPack.run('#/view_league');
 	});
 
+
+	this.get('#/view_all_results', function(context) {
+	    context.app.swap('');
+	    context.$element().append('<h1>View All Results</h1>');
+
+	    var leagues = [];
+
+	    for (i=0; i<=localStorage.length-1; i++)  
+	    {  
+	        key = localStorage.key(i);  
+	        leagues.push( { LeagueName: key.toString() } );
+	    } 
+
+	    renderAllResults(leagues, '#content');
+	});
+
     
 	this.get('#/view_results', function(context) {
 	    context.app.swap('');
@@ -86,9 +102,8 @@ var ratPack = $.sammy(function() {
 	    context.app.swap('');
 	    localStorage.setItem(postData.league_name,'[]');
 
-	    context.redirect('#/create_league');
+	    context.redirect('#/view_leagues');
 	});
-
 
 
 	this.get('#/edit_league', function(context) {

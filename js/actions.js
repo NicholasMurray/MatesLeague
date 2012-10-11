@@ -1,4 +1,21 @@
 
+function renderAllResults(data, container) {
+
+	var template = "<div class='clear'><span class='pos'>Leagues</span><" +
+			           "{{#data}}"+
+			           "<div class='clear'>" +
+			             "<span><a href='#/view_results/{{LeagueName}}'>{{LeagueName}}</a></span>" +
+				       "</div>"+
+			           "{{/data}}"+
+		    		"</div>";
+
+	var html = Mustache.to_html(template, {data:data});
+
+	$(container).html(html);
+}
+
+
+
 function renderResultsGet(data, container) {
 
 	var tpl = "<span>Latest Results</span>"+

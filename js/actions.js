@@ -1,12 +1,32 @@
 
+function renderHome(container) {
+
+	var tpl = "<nav class='nav'>" +
+		        "<ul>" +
+		            "<li class='first'><a href='#/view_all_results'>View All Results</a></li>" +
+		            "<li><a href='#/view_results'>View Results</a></li>" +
+		            "<li><a href='#/view_leagues'>View Leagues</a></li>" +
+		            "<li><a href='#/create_league'>Create League</a></li>" +
+		            "<li><a href='#/edit_league'>Edit League</a></li>" +
+		            "<li><a href='#/delete_league'>Delete Leage</a></li>" +
+		        "</ul>" +
+		    "</nav>";
+
+    $(container).html(tpl);
+}
+
+
+
 function renderAllResults(data, container) {
 
-	var template = "<div class='clear'><span class='pos'>Leagues</span><" +
-			           "{{#data}}"+
-			           "<div class='clear'>" +
-			             "<span><a href='#/view_results/{{LeagueName}}'>{{LeagueName}}</a></span>" +
-				       "</div>"+
-			           "{{/data}}"+
+	var template = "<div class='clear'>" +
+						"<ul class='nav'>" +
+							"<li class='first'><a href='Javascript:history.back(-1);'>Back</a></li>" +
+							"<li><a href='Javascript:void();'>All Results</a></li>" +
+			           		"{{#data}}"+
+			             		"<li><a href='#/view_results/{{LeagueName}}'>{{LeagueName}}</a></li>" +
+			           		"{{/data}}"+
+			           "</ul>"+
 		    		"</div>";
 
 	var html = Mustache.to_html(template, {data:data});
@@ -17,6 +37,13 @@ function renderAllResults(data, container) {
 
 
 function renderResultsGet(data, container) {
+
+
+	var start = "<div class='clear'>" +
+			           "<ul class='nav'>" +
+							"<li class='first'><a href='Javascript:history.back(-1);'>Back</a></li>" +
+							"<li><a href='Javascript:void();'>All Leagues</a></li>" +
+							"<li>";
 
 	var tpl = "<span>Latest Results</span>"+
 			  "{{#data}}"+
@@ -30,15 +57,20 @@ function renderResultsGet(data, container) {
 
 	var frm = "<form action='#/view_results' method='post'>" +
 				"home team:<input id='home_team' name='home_team' type='text' />" +
-				"home score:<input id='home_score' name='home_score' type='text' />" +
+				"home score:<input id='home_score' name='home_score' type='text' width='10' />" +
 				"<br />" +
-				"away score:<input id='away_score' name='away_score' type='text' />" +
+				"away score:<input id='away_score' name='away_score' type='text' width='10' />" +
 				"away team:<input id='away_team' name='away_team' type='text' />" +
 				"<br />" +
 				"<input id='home_team' type='submit' value='add' />" +
 				"</form>";
 
-	var viewResult = (tpl + spcr + frm);
+	var end	=          "</li>"+
+			        "</ul>"+
+		    		"</div>";		
+
+
+	var viewResult = (start + tpl + spcr + frm + end);
 
 	var html = Mustache.to_html(viewResult, {data:data});
 	
@@ -61,10 +93,11 @@ function renderResultsPost(data, container) {
 	var frm = "<form action='#/view_results' method='post'>" +
 				"home team:<input id='home_team' name='home_team' type='text' />" +
 				"home score:<input id='home_score' name='home_score' type='text' />" +
-				"away score:<input id='away_score' name='away_score' type='text' />" +
-				"away team:<input id='away_team' name='away_team' type='text' />" +
+				"away score:<input id='away_score' name='away_score' type='text' width='10' />" +
+				"away team:<input id='away_team' name='away_team' type='text' width='10' />" +
 				"<input id='add_result' type='submit' value='add' />" +
 				"</form>";
+
 
 	var viewResult = (tpl + spcr + frm);
 
@@ -76,12 +109,14 @@ function renderResultsPost(data, container) {
 
 function renderLeagues(data, container) {
 
-	var template = "<div class='clear'><span class='pos'>Leagues</span><" +
-			           "{{#data}}"+
-			           "<div class='clear'>" +
-			             "<span><a href='#/view_league/{{LeagueName}}'>{{LeagueName}}</a></span>" +
-				       "</div>"+
-			           "{{/data}}"+
+	var template = "<div class='clear'>" +
+			           "<ul class='nav'>" +
+							"<li class='first'><a href='Javascript:history.back(-1);'>Back</a></li>" +
+							"<li><a href='Javascript:void();'>All Leagues</a></li>" +
+			           		"{{#data}}"+
+			             		"<li><a href='#/view_results/{{LeagueName}}'>{{LeagueName}}</a></li>" +
+			           		"{{/data}}"+
+			           "</ul>"+
 		    		"</div>";
 
 	var html = Mustache.to_html(template, {data:data});

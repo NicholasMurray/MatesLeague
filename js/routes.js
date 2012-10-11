@@ -4,9 +4,15 @@ var ratPack = $.sammy(function() {
 
 
     $(function() {
-	  ratPack.run('#/view_league');
+	  ratPack.run('#/');
 	});
 
+
+    this.get('#/', function(context) {
+    	context.app.swap('');
+
+    	renderHome('#content');
+    });
 
 	this.get('#/view_all_results', function(context) {
 	    context.app.swap('');
@@ -24,13 +30,12 @@ var ratPack = $.sammy(function() {
 	});
 
     
-	this.get('#/view_results', function(context) {
+	this.get('#/view_results/:name', function(context) {
 	    context.app.swap('');
-	    context.$element().append('<h1>View Results</h1>');
 
 	    var currentResults = [];
 	    if ((localStorage["current"] !== null) && (localStorage["current"] !== undefined)) {
-	    	currentResults = JSON.parse(localStorage["current"]);
+	    	currentResults = JSON.parse(localStorage[this.params["name"]]);
 	    }
 
 	    renderResultsGet(currentResults, '#content');
@@ -39,7 +44,6 @@ var ratPack = $.sammy(function() {
 
 	this.post('#/view_results', function(context) {
 	    context.app.swap('');
-	    context.$element().append('<h1>View Results</h1>');
 
 		var postData = this.params;
 	    var currentResults = [];
@@ -64,7 +68,6 @@ var ratPack = $.sammy(function() {
 
 	this.get('#/view_leagues', function(context) {
 	    context.app.swap('');
-	    context.$element().append('<h1>View League</h1>');
 
 	    var leagues = [];
 
@@ -79,7 +82,6 @@ var ratPack = $.sammy(function() {
 
 	this.get('#/view_league/:name', function(context) {
 	    context.app.swap('');
-	    context.$element().append('<h1>View League</h1>');
 
 	    var currentResults = [];
 	    if ((localStorage["current"] !== null) && (localStorage["current"] !== undefined)) {
@@ -88,6 +90,12 @@ var ratPack = $.sammy(function() {
 
 	    renderLeague(currentResults, '#content');
 	});
+
+
+
+
+
+
 
 	this.get('#/create_league', function(context) {
 	    context.app.swap('');
@@ -116,7 +124,6 @@ var ratPack = $.sammy(function() {
 	    context.app.swap('');
 	    context.$element().append('<h1>Delete League</h1>');
 	});
-
 
 }).run("#/");
 

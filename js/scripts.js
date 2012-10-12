@@ -100,6 +100,10 @@ function getLeague(teams,data) {
 
 	league.sort(comparePoints);
 
+	for (var i = 0; i < league.length; i++) {
+    	league[i].Pos = (i + 1);
+	}	
+
 	return league;
 }
 

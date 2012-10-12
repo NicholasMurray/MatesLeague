@@ -4,7 +4,6 @@ function renderHome(container) {
 	var tpl = "<nav class='nav'>" +
 		        "<ul>" +
 		            "<li class='first'><a href='#/view_all_results'>View All Results</a></li>" +
-		            "<li><a href='#/view_results'>View Results</a></li>" +
 		            "<li><a href='#/view_leagues'>View Leagues</a></li>" +
 		            "<li><a href='#/create_league'>Create League</a></li>" +
 		            "<li><a href='#/edit_league'>Edit League</a></li>" +
@@ -21,8 +20,8 @@ function renderAllResults(data, container) {
 
 	var template = "<div class='clear'>" +
 						"<ul class='nav'>" +
-							"<li class='first'><a href='Javascript:history.back(-1);'>Back</a></li>" +
-							"<li><a href='Javascript:void();'>All Results</a></li>" +
+							"<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
+							"<li><a href='Javascript:void();' class='no_arrow'>All Results</a></li>" +
 			           		"{{#data}}"+
 			             		"<li><a href='#/view_results/{{LeagueName}}'>{{LeagueName}}</a></li>" +
 			           		"{{/data}}"+
@@ -38,18 +37,20 @@ function renderAllResults(data, container) {
 
 function renderResultsGet(data, container) {
 
-
 	var start = "<div class='clear'>" +
 			           "<ul class='nav'>" +
-							"<li class='first'><a href='Javascript:history.back(-1);'>Back</a></li>" +
-							"<li><a href='Javascript:void();'>All Leagues</a></li>" +
-							"<li>";
+							"<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
+							"<li><a href='Javascript:void();' class='no_arrow'>All Leagues</a></li>" +
+							"<li>" +
+							"<div class='padding_left_14'>";
 
 	var tpl = "<span>Latest Results</span>"+
+			  "<br />" +
 			  "{{#data}}"+
-			  "<div class='result_table clear'>"+
-			    "<span class='home_team'>{{HomeTeam}} </span><span class='score'>{{HomeScore}} - " +
-	            "{{AwayScore}}</span><span class='away_team'>{{AwayTeam}}</span>"+
+			  "<div class='result_row clear'>"+
+			    "<span class='home_team'>{{HomeTeam}} </span>" +
+			    "<span class='score'>{{HomeScore}} - " + "{{AwayScore}}</span>" +
+			    "<span class='away_team'>{{AwayTeam}}</span>"+
 	           "</div>"+
 	          "{{/data}}";
 
@@ -57,15 +58,17 @@ function renderResultsGet(data, container) {
 
 	var frm = "<form action='#/view_results' method='post'>" +
 				"home team:<input id='home_team' name='home_team' type='text' />" +
-				"home score:<input id='home_score' name='home_score' type='text' width='10' />" +
+				"home score:<input id='home_score' name='home_score' type='text'  class='input_small' />" +
 				"<br />" +
-				"away score:<input id='away_score' name='away_score' type='text' width='10' />" +
 				"away team:<input id='away_team' name='away_team' type='text' />" +
+				"away score:<input id='away_score' name='away_score' type='text'  class='input_small' />" +
 				"<br />" +
 				"<input id='home_team' type='submit' value='add' />" +
 				"</form>";
 
-	var end	=          "</li>"+
+	var end	=          "</div>"+
+						"</li>"+
+					   "<li><a href='Javascript:void();'></a></li>"+
 			        "</ul>"+
 		    		"</div>";		
 
@@ -78,7 +81,7 @@ function renderResultsGet(data, container) {
 }
 
 
-function renderResultsPost(data, container) {
+/*function renderResultsPost(data, container) {
 
 	var tpl = "<span>Latest Results</span>" +
 			  "{{#data}}" +
@@ -92,9 +95,9 @@ function renderResultsPost(data, container) {
 
 	var frm = "<form action='#/view_results' method='post'>" +
 				"home team:<input id='home_team' name='home_team' type='text' />" +
-				"home score:<input id='home_score' name='home_score' type='text' />" +
-				"away score:<input id='away_score' name='away_score' type='text' width='10' />" +
-				"away team:<input id='away_team' name='away_team' type='text' width='10' />" +
+				"home score:<input id='home_score' name='home_score' type='text' /><br />" +
+				"away team:<input id='away_team' name='away_team' type='text' class='input_small' />" +
+				"away score:<input id='away_score' name='away_score' type='text' class='input_small' />" +
 				"<input id='add_result' type='submit' value='add' />" +
 				"</form>";
 
@@ -105,16 +108,16 @@ function renderResultsPost(data, container) {
 	
 	$(container).html(html);
 }
-
+*/
 
 function renderLeagues(data, container) {
 
 	var template = "<div class='clear'>" +
 			           "<ul class='nav'>" +
-							"<li class='first'><a href='Javascript:history.back(-1);'>Back</a></li>" +
-							"<li><a href='Javascript:void();'>All Leagues</a></li>" +
+							"<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
+							"<li><a href='Javascript:void();' class='no_arrow'>All Leagues</a></li>" +
 			           		"{{#data}}"+
-			             		"<li><a href='#/view_results/{{LeagueName}}'>{{LeagueName}}</a></li>" +
+			             		"<li><a href='#/view_league/{{LeagueName}}'>{{LeagueName}}</a></li>" +
 			           		"{{/data}}"+
 			           "</ul>"+
 		    		"</div>";
@@ -125,11 +128,18 @@ function renderLeagues(data, container) {
 }
 
 
-function renderLeague(data, container) {
+function renderLeague(leagueName, data, container) {
 
 	var league = convertResultsToLeague(data);	
 
-	var template = "<div class='clear'><span class='pos'>Pos</span><span class='team'>Team</span>" +
+	var start = "<div class='clear'>" +
+			           "<ul class='nav'>" +
+							"<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
+							"<li><a href='Javascript:void();' class='no_arrow'>" + leagueName + "</a></li>" +
+							"<li>";
+
+
+	var template = "<div class='league'><span class='pos'>Pos</span><span class='team'>Team</span>" +
 			"<span class='played'>P</span><span class='for'>F</span><span class='against'>A</span><span class='gd'>GD</span><span class='pts'>Pts</span><div>" +
 		           "{{#league}}"+
 		           "<div class='league_table clear'>" +
@@ -140,9 +150,14 @@ function renderLeague(data, container) {
 		           "{{/league}}"+
 		    "</div>";
 
+	var end	=          "</li>"+
+					   "<li><a href='#/view_results/" + leagueName + "' class='back'>Add Result</a></li>"+
+			        "</ul>"+
+		    		"</div>";		
+
 	var html = Mustache.to_html(template, {league:league});
 
-	$(container).html(html);
+	$(container).html(start + html + end);
 }
 
 

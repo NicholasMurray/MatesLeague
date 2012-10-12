@@ -63,7 +63,8 @@ var ratPack = $.sammy(function() {
 
 		localStorage.setItem('current',JSON.stringify(currentResults));
 
-	    renderResultsPost(currentResults, '#content');
+		renderResultsGet(currentResults, '#content');
+	    //renderResultsPost(currentResults, '#content');
 	});
 
 	this.get('#/view_leagues', function(context) {
@@ -83,16 +84,15 @@ var ratPack = $.sammy(function() {
 	this.get('#/view_league/:name', function(context) {
 	    context.app.swap('');
 
-	    var currentResults = [];
+	    var league = [];
+	    var leagueName = this.params["name"];
+
 	    if ((localStorage["current"] !== null) && (localStorage["current"] !== undefined)) {
-	    	currentResults = JSON.parse(localStorage[this.params["name"]]);
+	    	league = JSON.parse(localStorage[leagueName]);
 	    }
 
-	    renderLeague(currentResults, '#content');
+	    renderLeague(leagueName, league, '#content');
 	});
-
-
-
 
 
 

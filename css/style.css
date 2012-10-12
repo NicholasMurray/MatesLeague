@@ -2,6 +2,7 @@
 	margin: 10px;
 	padding: 0 0 0 0;
 	font-family: Arial, Helvetica, sans-serif;
+	background: #DDD;
 }
 
 .nav {
@@ -31,13 +32,32 @@ li.first {
   padding: 10px;
   color: #333;
   text-decoration: none;
-  background: url(../images/arrow.png) no-repeat right center;
+  background: url(../images/right_arrow.png) no-repeat right center;
+}
+
+a.back {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  background: url(../images/left_arrow.png) no-repeat right center;
+}
+
+a.no_arrow {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  background: none;
 }
 
 
-.home_team { text-align: right; width: 160px; float: left; }
-.score { text-align: center; width: 80px; float: left; }
-.away_team { text-align: left; width: 160px; float: left; }
+
+.result_row { max-width: 200px; }
+.home_team { text-align: right; width: 40%; float: left; }
+.score { text-align: center; width: 20%; float: left; }
+.away_team { text-align: left; width: 40%; float: left; }
+
 
 .pos { text-align: left; width: 40px; float: left; }
 .team { text-align: left; width: 160px; float: left; }
@@ -47,7 +67,18 @@ li.first {
 .gd { text-align: left; width: 40px; float: left; }
 .pts { text-align: left; width: 40px; float: left; }
 
+.league { clear: both; padding-left: 14px; padding-top: 20px; margin-bottom: 30px; }
+
+.input_small { width: 20px; }
+
 .clear { clear: both; }
 .margin_top_10 { margin-top: 10px; }
 .padding_top_10 { padding-top: 10px; }
+.padding_top_20 { padding-top: 20px; }
+.padding_left_14 { padding-left: 14px; }
+.margin_bottom_30 { margin-bottom: 30px; }
+
+
+
+
 

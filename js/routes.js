@@ -1,10 +1,9 @@
-var ratPack = $.sammy(function() {
+var matesLeague = $.sammy(function() {
 
     this.element_selector = '#content';
 
-
     $(function() {
-	  ratPack.run('#/');
+	  matesLeague.run('#/');
 	});
 
 
@@ -18,31 +17,23 @@ var ratPack = $.sammy(function() {
 	    context.app.swap('');
 	    context.$element().append('<h1>View All Results</h1>');
 
-	    var leagues = [];
+	    var leagueNames = getLeagueNamesArray(); 
 
-	    for (i=0; i<=localStorage.length-1; i++)  
-	    {  
-	        key = localStorage.key(i);  
-	        leagues.push( { LeagueName: key.toString() } );
-	    } 
-
-	    renderAllResults(leagues, '#content');
+	    renderAllResults(leagueNames, '#content');
 	});
 
     
 	this.get('#/view_results/:name', function(context) {
 	    context.app.swap('');
 
-	    var currentResults = [];
-	    if ((localStorage["current"] !== null) && (localStorage["current"] !== undefined)) {
-	    	currentResults = JSON.parse(localStorage[this.params["name"]]);
-	    }
+	    var leagueName = this.params["name"];
+	    var leagueResults = getResults(leagueName);
 
-	    renderResultsGet(currentResults, '#content');
+	    renderResultsGet(leagueName, leagueResults, '#content');
 	});
 
 
-	this.post('#/view_results', function(context) {
+	this.post('#/view_results/:name', function(context) {
 	    context.app.swap('');
 
 		var postData = this.params;
@@ -64,32 +55,21 @@ var ratPack = $.sammy(function() {
 		localStorage.setItem('current',JSON.stringify(currentResults));
 
 		renderResultsGet(currentResults, '#content');
-	    //renderResultsPost(currentResults, '#content');
 	});
 
 	this.get('#/view_leagues', function(context) {
 	    context.app.swap('');
 
-	    var leagues = [];
+	    var leagueNames = getLeagueNamesArray();
 
-	    for (i=0; i<=localStorage.length-1; i++)  
-	    {  
-	        key = localStorage.key(i);  
-	        leagues.push( { LeagueName: key.toString() } );
-	    } 
-
-	    renderLeagues(leagues, '#content');
+	    renderLeagues(leagueNames, '#content');
 	});
 
 	this.get('#/view_league/:name', function(context) {
 	    context.app.swap('');
 
-	    var league = [];
 	    var leagueName = this.params["name"];
-
-	    if ((localStorage["current"] !== null) && (localStorage["current"] !== undefined)) {
-	    	league = JSON.parse(localStorage[leagueName]);
-	    }
+	    var league = getLeague(leagueName);
 
 	    renderLeague(leagueName, league, '#content');
 	});
@@ -113,16 +93,22 @@ var ratPack = $.sammy(function() {
 	    context.redirect('#/view_leagues');
 	});
 
-
+	
 	this.get('#/edit_league', function(context) {
-	    context.app.swap('');
-	    context.$element().append('<h1>Edit League</h1>');
+		context.app.swap('');
+
+	    var leagueNames = getLeagueNamesArray();
+
+	    renderEditLeagues(leagueNames, '#content');
 	});
 
 
 	this.get('#/delete_league', function(context) {
-	    context.app.swap('');
-	    context.$element().append('<h1>Delete League</h1>');
+	   context.app.swap('');
+
+	    var leagueNames = getLeagueNamesArray();
+
+	    renderDeleteLeagues(leagueNames, '#content');
 	});
 
 }).run("#/");

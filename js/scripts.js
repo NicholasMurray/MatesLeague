@@ -21,7 +21,7 @@ function setCurrentResults(data) {
 function convertResultsToLeague(data) {
 
 	var teams = getDistinctTeams(data);
-	var league = getLeague(teams, data);
+	var league = getLeagueTable(teams, data);
 
 	league = setGoalDifference(league);
 
@@ -37,7 +37,7 @@ function setGoalDifference(league) {
 }
 
 
-function getLeague(teams,data) {
+function getLeagueTable(teams,data) {
 
 	var league = [];
 

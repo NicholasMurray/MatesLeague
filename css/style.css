@@ -2,6 +2,7 @@
 	margin: 10px;
 	padding: 0 0 0 0;
 	font-family: Arial, Helvetica, sans-serif;
+	font-size: 50pt;
 	background: #DDD;
 }
 
@@ -53,23 +54,25 @@ a.no_arrow {
 
 
 
-.result_row { max-width: 200px; }
+.result_row { max-width: 1000px; }
 .home_team { text-align: right; width: 40%; float: left; }
 .score { text-align: center; width: 20%; float: left; }
 .away_team { text-align: left; width: 40%; float: left; }
 
 
-.pos { text-align: left; width: 40px; float: left; }
-.team { text-align: left; width: 160px; float: left; }
-.played { text-align: left; width: 40px; float: left; }
-.for { text-align: left; width: 40px; float: left; }
-.against { text-align: left; width: 40px; float: left; }
-.gd { text-align: left; width: 40px; float: left; }
-.pts { text-align: left; width: 40px; float: left; }
+.pos { text-align: left; width: 15%; float: left; }
+.team { text-align: left; width: 41%; float: left; }
+.played { text-align: right; width: 8%; float: left; }
+.for { text-align: right; width: 7%; float: left; }
+.against { text-align: right; width: 7%; float: left; }
+.gd { text-align: right; width: 12%; float: left; }
+.pts { text-align: right; width: 10%; float: left; }
 
-.league { clear: both; padding-left: 14px; padding-top: 20px; margin-bottom: 30px; }
+.league { max-width: 1000px; clear: both; padding-left: 14px; padding-top: 20px; margin-bottom: 30px; }
 
-.input_small { width: 20px; }
+.input_small { width: 40px; height: 40px; border: solid 1px; margin-top: -20px;}
+.input_large { width: 200px; height: 40px; border: solid 1px; }
+.btn { font-size: 50px; }
 
 .clear { clear: both; }
 .margin_top_10 { margin-top: 10px; }

@@ -1,42 +1,29 @@
-/*var currentResults = [
-	{ 	
-		Id: 1,
-		HomeTeam: 'Villa',
-		AwayTeam: 'Newcastle',
-		HomeScore: 2,
-		AwayScore: 1
-	}, 
-	{
-		Id: 2,
-		HomeTeam: 'Newcastle',
-		AwayTeam: 'Villa',
-		HomeScore: 0,
-		AwayScore: 2
-	},
-	{
-		Id: 3,
-		HomeTeam: 'Man Utd',
-		AwayTeam: 'Newcastle',
-		HomeScore: 0,
-		AwayScore: 3
-	}
-	];
 
-var currentLeague = [
-	{ 	
-		Pos: 1,
-		Team: 'Villa',
-		P: 2,
-		GD: '3',
-		Pts: 6
-	} , 
-	{
-		Pos: 2,
-		Team: 'Newcastle',
-		P: 2,
-		GD: '-3',
-		Pts: 0
-	}
-	];
- 
-*/
+function getLeagueNamesArray() {
+	var leagues = [];
+    for (i=0; i<=localStorage.length-1; i++)  
+    {  
+        key = localStorage.key(i);  
+        leagues.push( { LeagueName: key.toString() } );
+    } 
+    return leagues;
+}
+
+
+function getLeague(leagueName) {
+	var league = [];
+    if ((localStorage[leagueName] !== null) && (localStorage[leagueName] !== undefined)) {
+    	league = JSON.parse(localStorage[leagueName]);
+    }
+    return league;
+}
+
+function getResults(leagueName) {
+	var league = [];
+    if ((localStorage[leagueName] !== null) && (localStorage[leagueName] !== undefined)) {
+    	league = JSON.parse(localStorage[leagueName]);
+    }
+    return league;
+}
+
+

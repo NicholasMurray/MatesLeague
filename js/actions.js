@@ -35,7 +35,7 @@ function renderAllResults(data, container) {
 
 
 
-function renderResultsGet(data, container) {
+function renderResultsGet(leagueName, data, container) {
 
 	var start = "<div class='clear'>" +
 			           "<ul class='nav'>" +
@@ -44,7 +44,7 @@ function renderResultsGet(data, container) {
 							"<li>" +
 							"<div class='padding_left_14'>";
 
-	var tpl = "<span>Latest Results</span>"+
+	var tpl = "<span>Latest Results for <i>" + leagueName + "</i></span>"+
 			  "<br />" +
 			  "{{#data}}"+
 			  "<div class='result_row clear'>"+
@@ -56,17 +56,18 @@ function renderResultsGet(data, container) {
 
 	var spcr = "<div class='clear padding_top_10'></div>";
 
-	var frm = "<form action='#/view_results' method='post'>" +
-				"home team:<input id='home_team' name='home_team' type='text' />" +
-				"home score:<input id='home_score' name='home_score' type='text'  class='input_small' />" +
+	var frm = "<form action='#/view_results/" + leagueName + "' method='post'>" +
+				"home team:<input id='home_team' name='home_team' type='text' class='input_large' />" +
+				"home score:<input id='home_score' name='home_score' type='text' class='input_small' />" +
 				"<br />" +
-				"away team:<input id='away_team' name='away_team' type='text' />" +
-				"away score:<input id='away_score' name='away_score' type='text'  class='input_small' />" +
+				"away team:<input id='away_team' name='away_team' type='text' class='input_large' />" +
+				"away score:<input id='away_score' name='away_score' type='text' class='input_small' />" +
 				"<br />" +
-				"<input id='home_team' type='submit' value='add' />" +
+				"<input id='home_team' type='submit' value='add' class='btn' />" +
 				"</form>";
 
-	var end	=          "</div>"+
+	var end	=          "<br />" +
+						"</div>"+
 						"</li>"+
 					   "<li><a href='Javascript:void();'></a></li>"+
 			        "</ul>"+
@@ -80,35 +81,6 @@ function renderResultsGet(data, container) {
 	$(container).html(html);
 }
 
-
-/*function renderResultsPost(data, container) {
-
-	var tpl = "<span>Latest Results</span>" +
-			  "{{#data}}" +
-			  "<div class='result_table clear'>" +
-			    "<span class='home_team'>{{HomeTeam}} </span><span class='score'>{{HomeScore}} - " +
-	            "{{AwayScore}}</span><span class='away_team'>{{AwayTeam}}</span>"+
-	           "</div>" +
-	          "{{/data}}";
-
-	var spcr = "<div class='clear top_margin_10'></div>";
-
-	var frm = "<form action='#/view_results' method='post'>" +
-				"home team:<input id='home_team' name='home_team' type='text' />" +
-				"home score:<input id='home_score' name='home_score' type='text' /><br />" +
-				"away team:<input id='away_team' name='away_team' type='text' class='input_small' />" +
-				"away score:<input id='away_score' name='away_score' type='text' class='input_small' />" +
-				"<input id='add_result' type='submit' value='add' />" +
-				"</form>";
-
-
-	var viewResult = (tpl + spcr + frm);
-
-	var html = Mustache.to_html(viewResult, {data:data});
-	
-	$(container).html(html);
-}
-*/
 
 function renderLeagues(data, container) {
 
@@ -150,7 +122,8 @@ function renderLeague(leagueName, data, container) {
 		           "{{/league}}"+
 		    "</div>";
 
-	var end	=          "</li>"+
+	var end	=          "<br />" +
+						"</li>"+
 					   "<li><a href='#/view_results/" + leagueName + "' class='back'>Add Result</a></li>"+
 			        "</ul>"+
 		    		"</div>";		
@@ -163,14 +136,27 @@ function renderLeague(leagueName, data, container) {
 
 function renderCreateLeague(container) {
 
-	var spcr = "<div class='clear top_margin_10'></div>";
+	var start = "<div class='clear'>" +
+			           "<ul class='nav'>" +
+							"<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
+							"<li><a href='Javascript:void();' class='no_arrow'>Create a new league</a></li>" +
+							"<li>";
 
-	var frm = "<form action='#/create_league' method='post'>" +
-				"league name:<input id='league_name' name='league_name' type='text' />" +
-				"<input id='add_league' type='submit' value='add' />" +
-				"</form>";
+	var frm = 	"<div class='padding_left_14'>" +
+				"<br />" +
+				"<form action='#/create_league' method='post'>" +
+				"league name:<input id='league_name' name='league_name' type='text' class='input_large' />" +
+				"<input id='add_league' type='submit' value='add' class='btn' />" +
+				"</form>" +
+				"<br />" +
+				"</div>";
 
-	var viewResult = (spcr + frm);
+
+	var end	=          "</li>"+
+			        "</ul>"+
+		    		"</div>";
+
+	var viewResult = (start + frm + end);
 
 	var html = Mustache.to_html(viewResult);
 
@@ -178,3 +164,37 @@ function renderCreateLeague(container) {
 }
 
 
+function renderEditLeagues(data, container) {
+
+	var template = "<div class='clear'>" +
+			           "<ul class='nav'>" +
+							"<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
+							"<li><a href='Javascript:void();' class='no_arrow'>Select a league to Edit</a></li>" +
+			           		"{{#data}}"+
+			             		"<li><a href='#/view_league/{{LeagueName}}'>{{LeagueName}}</a></li>" +
+			           		"{{/data}}"+
+			           "</ul>"+
+		    		"</div>";
+
+	var html = Mustache.to_html(template, {data:data});
+
+	$(container).html(html);
+}
+
+
+function renderDeleteLeagues(data, container) {
+
+	var template = "<div class='clear'>" +
+			           "<ul class='nav'>" +
+							"<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
+							"<li><a href='Javascript:void();' class='no_arrow'>Select a league to Delete</a></li>" +
+			           		"{{#data}}"+
+			             		"<li><a href='#/view_league/{{LeagueName}}'>{{LeagueName}}</a></li>" +
+			           		"{{/data}}"+
+			           "</ul>"+
+		    		"</div>";
+
+	var html = Mustache.to_html(template, {data:data});
+
+	$(container).html(html);
+}

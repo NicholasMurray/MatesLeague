@@ -14,22 +14,19 @@ function renderHomeView() {
 
 
 function renderAllResultsView() {
-    var view = "<div class='clear'>" +
-                        "<ul class='nav'>" +
+    var view = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>All Results</a></li>" +
                             "{{#data}}"+
                                 "<li><a href='#/view_results/{{LeagueName}}'>{{LeagueName}}</a></li>" +
                             "{{/data}}"+
-                       "</ul>"+
-                    "</div>";
+                       "</ul>";
     return view;
 }
 
 
-function renderResultsGetView(LeagueName) {
-    var start = "<div class='clear'>" +
-                       "<ul class='nav'>" +
+function renderResultsGetView(leagueName) {
+    var start = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>All Leagues</a></li>" +
                             "<li>" +
@@ -57,9 +54,7 @@ function renderResultsGetView(LeagueName) {
                         "</div>"+
                         "</li>"+
                        "<li><a href='Javascript:void();'></a></li>"+
-                    "</ul>"+
-                    "</div>";       
-
+                    "</ul>";
 
     var view = (start + tpl + spcr + frm + end);
 
@@ -67,9 +62,8 @@ function renderResultsGetView(LeagueName) {
 }
 
 
-function renderLeagueView(LeagueName) {
-    var start = "<div class='clear'>" +
-                       "<ul class='nav'>" +
+function renderLeagueView(leagueName) {
+    var start = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>" + leagueName + "</a></li>" +
                             "<li>";
@@ -86,8 +80,7 @@ function renderLeagueView(LeagueName) {
     var end =          "<br />" +
                         "</li>"+
                        "<li><a href='#/view_results/" + leagueName + "' class='back'>Add Result</a></li>"+
-                    "</ul>"+
-                    "</div>";       
+                    "</ul>";
 
     var view = (start + template + end);
 
@@ -96,8 +89,7 @@ function renderLeagueView(LeagueName) {
 
 
 function renderCreateLeagueView() {
-    var start = "<div class='clear'>" +
-                       "<ul class='nav'>" +
+    var start = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>Create a new league</a></li>" +
                             "<li>";
@@ -111,8 +103,7 @@ function renderCreateLeagueView() {
                 "</div>";
 
     var end =          "</li>"+
-                    "</ul>"+
-                    "</div>";
+                    "</ul>";
 
     var view = (start + frm + end);
     return view;
@@ -132,30 +123,46 @@ function renderLeaguesView() {
 
 
 function renderEditLeaguesView() {
-    var view = "<div class='clear'>" +
-                       "<ul class='nav'>" +
+    var view = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>Select a league to Edit</a></li>" +
                             "{{#data}}"+
                                 "<li><a href='#/view_league/{{LeagueName}}'>{{LeagueName}}</a></li>" +
                             "{{/data}}"+
-                       "</ul>"+
-                    "</div>";
+                       "</ul>";
     return view;
 }
 
 
 function renderDeleteLeaguesView() {
-    var view = "<div class='clear'>" +
-                       "<ul class='nav'>" +
+    var view = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>Select a league to Delete</a></li>" +
                             "{{#data}}"+
-                                "<li><a href='#/view_league/{{LeagueName}}'>{{LeagueName}}</a></li>" +
+                                "<li>" +
+                                    "<a href='#/delete_league/{{LeagueName}}'>{{LeagueName}}</a>" +
+                                "</li>" +
                             "{{/data}}"+
-                       "</ul>"+
-                    "</div>";
+                       "</ul>";
     return view;
 }
 
-
+function renderDeleteNamedLeaguesView(leagueName) {
+    var view = "<ul class='nav'>" +
+                            "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
+                            "<li><a href='Javascript:void();' class='no_arrow'>Delete a League</a></li>" +
+                            "<li class='non_link'>" +
+                                "<div class='non_link'>" +
+                                    "<form action='#/delete_league/{{leagueName}}' method='post'>" +
+                                        "<div class='float_left'>{{leagueName}}</div>" +
+                                        "<div class='float_left'>" +
+                                            "<input type='hidden' name='league_name' value='{{leagueName}}' />" +
+                                            "<input type='submit' value='delete' class='btn' />" +
+                                        "</div>" +
+                                    "</form>" +
+                                "</div>" +
+                                "<div class='clear'></div>" +
+                            "</li>" +
+                       "</ul>";
+    return view;
+}

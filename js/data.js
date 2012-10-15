@@ -26,4 +26,6 @@ function getResults(leagueName) {
     return league;
 }
 
-
+function deleteLeague(leagueName) {
+	localStorage.removeItem(leagueName);
+}

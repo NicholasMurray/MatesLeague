@@ -10,16 +10,15 @@ var matesLeague = $.sammy(function() {
     this.get('#/', function(context) {
     	context.app.swap('');
 
-    	renderHome('#content');
+    	renderHomeAction('#content');
     });
 
 	this.get('#/view_all_results', function(context) {
 	    context.app.swap('');
-	    context.$element().append('<h1>View All Results</h1>');
 
 	    var leagueNames = getLeagueNamesArray(); 
 
-	    renderAllResults(leagueNames, '#content');
+	    renderAllResultsAction(leagueNames, '#content');
 	});
 
     
@@ -57,13 +56,15 @@ var matesLeague = $.sammy(function() {
 		renderResultsGet(currentResults, '#content');
 	});
 
+
 	this.get('#/view_leagues', function(context) {
 	    context.app.swap('');
 
 	    var leagueNames = getLeagueNamesArray();
 
-	    renderLeagues(leagueNames, '#content');
+	    renderLeaguesAction(leagueNames, '#content');
 	});
+
 
 	this.get('#/view_league/:name', function(context) {
 	    context.app.swap('');
@@ -71,7 +72,7 @@ var matesLeague = $.sammy(function() {
 	    var leagueName = this.params["name"];
 	    var league = getLeague(leagueName);
 
-	    renderLeague(leagueName, league, '#content');
+	    renderLeagueAction(leagueName, league, '#content');
 	});
 
 
@@ -79,9 +80,8 @@ var matesLeague = $.sammy(function() {
 
 	this.get('#/create_league', function(context) {
 	    context.app.swap('');
-	    context.$element().append('<h1>Create League</h1>');
 
-	    renderCreateLeague('#content');
+	    renderCreateLeagueAction('#content');
 	});
 
 	this.post('#/create_league', function(context) {
@@ -99,7 +99,7 @@ var matesLeague = $.sammy(function() {
 
 	    var leagueNames = getLeagueNamesArray();
 
-	    renderEditLeagues(leagueNames, '#content');
+	    renderEditLeaguesAction(leagueNames, '#content');
 	});
 
 
@@ -108,7 +108,27 @@ var matesLeague = $.sammy(function() {
 
 	    var leagueNames = getLeagueNamesArray();
 
-	    renderDeleteLeagues(leagueNames, '#content');
+	    renderDeleteLeaguesAction(leagueNames, '#content');
+	});
+
+
+	this.get('#/delete_league/:name', function(context) {
+	   context.app.swap('');
+
+	    var leagueName = this.params["name"];
+
+	    renderDeleteNamedLeaguesAction(leagueName, '#content');
+	});
+
+
+	this.post('#/delete_league/:name', function(context) {
+	   context.app.swap('');
+
+	    var postData = this.params;
+
+	    deleteLeague(postData.league_name);
+
+	    context.redirect('#/delete_league');
 	});
 
 }).run("#/");

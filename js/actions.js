@@ -1,5 +1,5 @@
 
-function renderHome(container) {
+function renderHomeAction(container) {
 
 	var view = renderHomeView();
 
@@ -8,7 +8,7 @@ function renderHome(container) {
 
 
 
-function renderAllResults(data, container) {
+function renderAllResultsAction(data, container) {
 
 	var view = renderAllResultsView();
 
@@ -21,7 +21,7 @@ function renderAllResults(data, container) {
 
 function renderResultsGet(leagueName, data, container) {
 
-	var view = renderResultsGetView();
+	var view = renderResultsGetView(leagueName);
 
 	var html = Mustache.to_html(view, {data:data});
 	
@@ -29,7 +29,7 @@ function renderResultsGet(leagueName, data, container) {
 }
 
 
-function renderLeagues(data, container) {
+function renderLeaguesAction(data, container) {
 
 	var view = renderLeaguesView();
 
@@ -39,19 +39,19 @@ function renderLeagues(data, container) {
 }
 
 
-function renderLeague(leagueName, data, container) {
+function renderLeagueAction(leagueName, data, container) {
 
 	var league = convertResultsToLeague(data);	
 
 	var view = renderLeagueView(leagueName);
 
-	var html = Mustache.to_html(template, {league:league});
+	var html = Mustache.to_html(view, {league:league});
 
-	$(container).html(start + html + end);
+	$(container).html(html);
 }
 
 
-function renderCreateLeague(container) {
+function renderCreateLeagueAction(container) {
 
 	var view = renderCreateLeagueView();
 
@@ -61,7 +61,7 @@ function renderCreateLeague(container) {
 }
 
 
-function renderEditLeagues(data, container) {
+function renderEditLeaguesAction(data, container) {
 
 	var view = renderEditLeaguesView();
 
@@ -70,8 +70,7 @@ function renderEditLeagues(data, container) {
 	$(container).html(html);
 }
 
-
-function renderDeleteLeagues(data, container) {
+function renderDeleteLeaguesAction(data, container) {
 
 	var view = renderDeleteLeaguesView();
 
@@ -79,4 +78,16 @@ function renderDeleteLeagues(data, container) {
 
 	$(container).html(html);
 }
+
+function renderDeleteNamedLeaguesAction(leagueName, container) {
+
+	var view = renderDeleteNamedLeaguesView(leagueName);
+
+	var html = Mustache.to_html(view, {leagueName:leagueName});
+
+	$(container).html(html);
+}
+
+
+
 

@@ -35,15 +35,17 @@ var matesLeague = $.sammy(function() {
 	this.post('#/view_results/:name', function(context) {
 	    context.app.swap('');
 
+	    var leagueName = this.params["name"];
 		var postData = this.params;
-	    var currentResults = [];
-	    if ((localStorage["current"] !== null) && (localStorage["current"] !== undefined)) {
-	    	currentResults = JSON.parse(localStorage["current"]);
+	    var leagueResults = [];
+
+	    if ((localStorage[leagueName] !== null) && (localStorage[leagueName] !== undefined)) {
+	    	leagueResults = JSON.parse(localStorage[leagueName]);
 	    }
 
-	    var nextId = (currentResults.length + 1);
+	    var nextId = (leagueResults.length + 1);
 
-	    currentResults.push({
+	    leagueResults.push({
 			Id: parseInt(nextId.toString()),
 			HomeTeam: postData.home_team.toString(),
 			AwayTeam: postData.away_team.toString(),
@@ -51,9 +53,11 @@ var matesLeague = $.sammy(function() {
 			AwayScore: parseInt(postData.away_score.toString())
 		});
 
-		localStorage.setItem('current',JSON.stringify(currentResults));
+		localStorage.setItem(leagueName,JSON.stringify(leagueResults));
 
-		renderResultsGet(currentResults, '#content');
+		var redirectUrl = '#/view_results/' + leagueName;
+
+		context.redirect(redirectUrl);		
 	});
 
 

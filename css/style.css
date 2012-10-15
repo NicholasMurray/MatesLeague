@@ -80,8 +80,9 @@ a.no_arrow {
 
 .league { max-width: 1000px; clear: both; padding-left: 14px; padding-top: 20px; margin-bottom: 30px; }
 
-.input_small { width: 40px; height: 40px; border: solid 1px; margin-top: -20px;}
-.input_large { width: 200px; height: 40px; border: solid 1px; }
+.input_small { width: 60px; height: 70px; border: solid 1px; font-size: 50pt; }
+.input_medium { width: 350px; height: 70px; border: solid 1px; font-size: 50pt; }
+.input_large { width: 500px; height: 40px; border: solid 1px; font-size: 50pt; }
 .btn { font-size: 50px; }
 
 .clear { clear: both; }

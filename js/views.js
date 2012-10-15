@@ -29,7 +29,7 @@ function renderResultsGetView(leagueName) {
     var start = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>All Leagues</a></li>" +
-                            "<li>" +
+                            "<li class='non_link'>" +
                             "<div class='padding_left_14'>";
     var tpl = "<span>Latest Results for <i>" + leagueName + "</i></span>"+
               "<br />" +
@@ -42,18 +42,16 @@ function renderResultsGetView(leagueName) {
               "{{/data}}";
     var spcr = "<div class='clear padding_top_10'></div>";
     var frm = "<form action='#/view_results/" + leagueName + "' method='post'>" +
-                "home team:<input id='home_team' name='home_team' type='text' class='input_large' />" +
-                "home score:<input id='home_score' name='home_score' type='text' class='input_small' />" +
+                "home team:<input id='home_team' name='home_team' type='text' class='input_medium' />" +
+                " score:<input id='home_score' name='home_score' type='text' class='input_small' />" +
                 "<br />" +
-                "away team:<input id='away_team' name='away_team' type='text' class='input_large' />" +
-                "away score:<input id='away_score' name='away_score' type='text' class='input_small' />" +
+                "&nbsp;away team:<input id='away_team' name='away_team' type='text' class='input_medium' />" +
+                " score:<input id='away_score' name='away_score' type='text' class='input_small' />" +
                 "<br />" +
                 "<input id='home_team' type='submit' value='add' class='btn' />" +
                 "</form>";
-    var end =          "<br />" +
-                        "</div>"+
+    var end =          "</div>"+
                         "</li>"+
-                       "<li><a href='Javascript:void();'></a></li>"+
                     "</ul>";
 
     var view = (start + tpl + spcr + frm + end);
@@ -96,7 +94,8 @@ function renderCreateLeagueView() {
     var frm =   "<div class='padding_left_14'>" +
                 "<br />" +
                 "<form action='#/create_league' method='post'>" +
-                "league name:<input id='league_name' name='league_name' type='text' class='input_large' />" +
+                "league name:<br />" +
+                "<input id='league_name' name='league_name' type='text' class='input_large' /><br />" +
                 "<input id='add_league' type='submit' value='add' class='btn' />" +
                 "</form>" +
                 "<br />" +

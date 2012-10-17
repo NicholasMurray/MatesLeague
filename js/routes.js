@@ -10,7 +10,7 @@ var matesLeague = $.sammy(function() {
     this.get('#/', function(context) {
     	context.app.swap('');
 
-    	renderHomeAction('#content');
+    	homeAction('#content');
     });
 
 	this.get('#/view_all_results', function(context) {
@@ -18,7 +18,7 @@ var matesLeague = $.sammy(function() {
 
 	    var leagueNames = getLeagueNamesArray(); 
 
-	    renderAllResultsAction(leagueNames, '#content');
+	    allResultsAction(leagueNames, '#content');
 	});
 
     
@@ -28,7 +28,7 @@ var matesLeague = $.sammy(function() {
 	    var leagueName = this.params["name"];
 	    var leagueResults = getResults(leagueName);
 
-	    renderResultsGet(leagueName, leagueResults, '#content');
+	    resultsGetAction(leagueName, leagueResults, '#content');
 	});
 
 
@@ -51,7 +51,7 @@ var matesLeague = $.sammy(function() {
 
 	    var leagueNames = getLeagueNamesArray();
 
-	    renderLeaguesAction(leagueNames, '#content');
+	    leaguesAction(leagueNames, '#content');
 	});
 
 
@@ -61,7 +61,7 @@ var matesLeague = $.sammy(function() {
 	    var leagueName = this.params["name"];
 	    var league = getLeague(leagueName);
 
-	    renderLeagueAction(leagueName, league, '#content');
+	    leagueAction(leagueName, league, '#content');
 	});
 
 
@@ -82,7 +82,7 @@ var matesLeague = $.sammy(function() {
 	this.get('#/create_league', function(context) {
 	    context.app.swap('');
 
-	    renderCreateLeagueAction('#content');
+	    createLeagueAction('#content');
 	});
 
 	this.post('#/create_league', function(context) {
@@ -100,7 +100,7 @@ var matesLeague = $.sammy(function() {
 
 	    var leagueNames = getLeagueNamesArray();
 
-	    renderEditLeaguesAction(leagueNames, '#content');
+	    editLeaguesAction(leagueNames, '#content');
 	});
 
 
@@ -109,7 +109,7 @@ var matesLeague = $.sammy(function() {
 
 	    var leagueNames = getLeagueNamesArray();
 
-	    renderDeleteLeaguesAction(leagueNames, '#content');
+	    deleteLeaguesAction(leagueNames, '#content');
 	});
 
 
@@ -118,7 +118,7 @@ var matesLeague = $.sammy(function() {
 
 	    var leagueName = this.params["name"];
 
-	    renderDeleteNamedLeaguesAction(leagueName, '#content');
+	    deleteNamedLeaguesAction(leagueName, '#content');
 	});
 
 

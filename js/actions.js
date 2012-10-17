@@ -1,5 +1,5 @@
 
-function renderHomeAction(container) {
+function homeAction(container) {
 
 	var view = renderHomeView();
 
@@ -8,7 +8,7 @@ function renderHomeAction(container) {
 
 
 
-function renderAllResultsAction(data, container) {
+function allResultsAction(data, container) {
 
 	var view = renderAllResultsView();
 
@@ -19,7 +19,7 @@ function renderAllResultsAction(data, container) {
 
 
 
-function renderResultsGet(leagueName, data, container) {
+function resultsGetAction(leagueName, data, container) {
 
 	var view = renderResultsGetView(leagueName);
 
@@ -29,7 +29,7 @@ function renderResultsGet(leagueName, data, container) {
 }
 
 
-function renderLeaguesAction(data, container) {
+function leaguesAction(data, container) {
 
 	var view = renderLeaguesView();
 
@@ -39,7 +39,7 @@ function renderLeaguesAction(data, container) {
 }
 
 
-function renderLeagueAction(leagueName, data, container) {
+function leagueAction(leagueName, data, container) {
 
 	var league = convertResultsToLeague(data);	
 
@@ -51,7 +51,7 @@ function renderLeagueAction(leagueName, data, container) {
 }
 
 
-function renderCreateLeagueAction(container) {
+function createLeagueAction(container) {
 
 	var view = renderCreateLeagueView();
 
@@ -61,7 +61,7 @@ function renderCreateLeagueAction(container) {
 }
 
 
-function renderEditLeaguesAction(data, container) {
+function editLeaguesAction(data, container) {
 
 	var view = renderEditLeaguesView();
 
@@ -70,7 +70,7 @@ function renderEditLeaguesAction(data, container) {
 	$(container).html(html);
 }
 
-function renderDeleteLeaguesAction(data, container) {
+function deleteLeaguesAction(data, container) {
 
 	var view = renderDeleteLeaguesView();
 
@@ -79,7 +79,7 @@ function renderDeleteLeaguesAction(data, container) {
 	$(container).html(html);
 }
 
-function renderDeleteNamedLeaguesAction(leagueName, container) {
+function deleteNamedLeaguesAction(leagueName, container) {
 
 	var view = renderDeleteNamedLeaguesView(leagueName);
 

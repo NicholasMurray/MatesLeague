@@ -37,23 +37,8 @@ var matesLeague = $.sammy(function() {
 
 	    var leagueName = this.params["name"];
 		var postData = this.params;
-	    var leagueResults = [];
 
-	    if ((localStorage[leagueName] !== null) && (localStorage[leagueName] !== undefined)) {
-	    	leagueResults = JSON.parse(localStorage[leagueName]);
-	    }
-
-	    var nextId = (leagueResults.length + 1);
-
-	    leagueResults.push({
-			Id: parseInt(nextId.toString()),
-			HomeTeam: postData.home_team.toString(),
-			AwayTeam: postData.away_team.toString(),
-			HomeScore: parseInt(postData.home_score.toString()),
-			AwayScore: parseInt(postData.away_score.toString())
-		});
-
-		localStorage.setItem(leagueName,JSON.stringify(leagueResults));
+		saveResult(leagueName, postData);
 
 		var redirectUrl = '#/view_results/' + leagueName;
 
@@ -80,6 +65,18 @@ var matesLeague = $.sammy(function() {
 	});
 
 
+	this.post('#/view_league/:name', function(context) {
+	    context.app.swap('');
+
+	    var leagueName = this.params["name"];
+		var postData = this.params;
+
+		saveResult(leagueName, postData);
+
+		var redirectUrl = '#/view_league/' + leagueName;
+
+		context.redirect(redirectUrl);		
+	});
 
 
 	this.get('#/create_league', function(context) {

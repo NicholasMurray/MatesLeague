@@ -42,11 +42,13 @@ function renderResultsGetView(leagueName) {
               "{{/data}}";
     var spcr = "<div class='clear padding_top_10'></div>";
     var frm = "<form action='#/view_results/" + leagueName + "' method='post'>" +
-                "home team:<input id='home_team' name='home_team' type='text' class='input_medium' />" +
+                "home:<br />" +
+                "team<input id='home_team' name='home_team' type='text' class='input_medium' />" +
                 " score:<input id='home_score' name='home_score' type='text' class='input_small' />" +
                 "<br />" +
-                "&nbsp;away team:<input id='away_team' name='away_team' type='text' class='input_medium' />" +
-                " score:<input id='away_score' name='away_score' type='text' class='input_small' />" +
+                "away<br />" +
+                "team:<input id='away_team' name='away_team' type='text' class='input_medium' />" +
+                "score:<input id='away_score' name='away_score' type='text' class='input_small' />" +
                 "<br />" +
                 "<input id='home_team' type='submit' value='add' class='btn' />" +
                 "</form>";
@@ -66,21 +68,36 @@ function renderLeagueView(leagueName) {
                             "<li><a href='Javascript:void();' class='no_arrow'>" + leagueName + "</a></li>" +
                             "<li>";
     var template = "<div class='league'><span class='pos'>Pos</span><span class='team'>Team</span>" +
-            "<span class='played'>P</span><span class='for'>F</span><span class='against'>A</span><span class='gd'>GD</span><span class='pts'>Pts</span><div>" +
-                   "{{#league}}"+
-                   "<div class='league_table clear'>" +
-                     "<span class='pos'>{{Pos}}</span><span class='team'>{{Team}}</span>" +
-                     "<span class='played'>{{Played}}</span><span class='for'>{{For}}</span><span class='against'>{{Against}}</span>" +
-                     "<span class='gd'>{{GD}}</span><span class='pts'>{{Points}}</span>" +
-                   "</div>"+
-                   "{{/league}}"+
-            "</div>";
-    var end =          "<br />" +
+                    "<span class='played'>P</span><span class='for'>F</span><span class='against'>A</span>" +
+                    "<span class='gd'>GD</span><span class='pts'>Pts</span><div>" +
+                           "{{#league}}"+
+                           "<div class='league_table clear'>" +
+                             "<span class='pos'>{{Pos}}</span><span class='team'>{{Team}}</span>" +
+                             "<span class='played'>{{Played}}</span><span class='for'>{{For}}</span><span class='against'>{{Against}}</span>" +
+                             "<span class='gd'>{{GD}}</span><span class='pts'>{{Points}}</span>" +
+                           "</div>"+
+                           "{{/league}}"+
+                    "</div>" +
+                    "<br />" +
                         "</li>"+
-                       "<li><a href='#/view_results/" + leagueName + "' class='back'>Add Result</a></li>"+
+                       "<li>";
+
+    var frm = "<form action='#/view_league/" + leagueName + "' method='post'>" +
+                "home:<br />" +
+                "team<input id='home_team' name='home_team' type='text' class='input_medium' />" +
+                " score:<input id='home_score' name='home_score' type='text' class='input_small' />" +
+                "<br />" +
+                "away<br />" +
+                "team:<input id='away_team' name='away_team' type='text' class='input_medium' />" +
+                "score:<input id='away_score' name='away_score' type='text' class='input_small' />" +
+                "<br />" +
+                "<input id='home_team' type='submit' value='add' class='btn' />" +
+                "</form>";
+
+    var end =          "</li>"+
                     "</ul>";
 
-    var view = (start + template + end);
+    var view = (start + template + frm + end);
 
     return view;
 }

@@ -26,6 +26,26 @@ function getResults(leagueName) {
     return league;
 }
 
+function saveResult(leagueName, postData) {
+    var leagueResults = [];
+
+    if ((localStorage[leagueName] !== null) && (localStorage[leagueName] !== undefined)) {
+        leagueResults = JSON.parse(localStorage[leagueName]);
+    }
+
+    var nextId = (leagueResults.length + 1);
+
+    leagueResults.push({
+        Id: parseInt(nextId.toString()),
+        HomeTeam: postData.home_team.toString(),
+        AwayTeam: postData.away_team.toString(),
+        HomeScore: parseInt(postData.home_score.toString()),
+        AwayScore: parseInt(postData.away_score.toString())
+    });
+    localStorage.setItem(leagueName,JSON.stringify(leagueResults));
+}
+
+
 function deleteLeague(leagueName) {
 	localStorage.removeItem(leagueName);
 }

@@ -1,7 +1,7 @@
 
 function homeAction(container) {
 
-	var view = renderHomeView();
+	var view = homeView();
 
     $(container).html(view);
 }
@@ -10,7 +10,7 @@ function homeAction(container) {
 
 function allResultsAction(data, container) {
 
-	var view = renderAllResultsView();
+	var view = allResultsView();
 
 	var html = Mustache.to_html(view, {data:data});
 
@@ -21,7 +21,7 @@ function allResultsAction(data, container) {
 
 function resultsGetAction(leagueName, data, container) {
 
-	var view = renderResultsGetView(leagueName);
+	var view = resultsGetView(leagueName);
 
 	var html = Mustache.to_html(view, {data:data});
 	
@@ -31,7 +31,7 @@ function resultsGetAction(leagueName, data, container) {
 
 function leaguesAction(data, container) {
 
-	var view = renderLeaguesView();
+	var view = leaguesView();
 
 	var html = Mustache.to_html(view, {data:data});
 
@@ -39,13 +39,17 @@ function leaguesAction(data, container) {
 }
 
 
-function leagueAction(leagueName, data, container) {
+function leagueAction(leagueName, data, fixturesRemaining, container) {
 
 	var league = convertResultsToLeague(data);	
+	var view = leagueView(leagueName); 
 
-	var view = renderLeagueView(leagueName);
+	var viewModel = {
+		League : league,
+		FixturesRemaining : fixturesRemaining
+	};
 
-	var html = Mustache.to_html(view, {league:league});
+	var html = Mustache.to_html(view, {viewModel:viewModel});
 
 	$(container).html(html);
 }
@@ -53,7 +57,7 @@ function leagueAction(leagueName, data, container) {
 
 function createLeagueAction(container) {
 
-	var view = renderCreateLeagueView();
+	var view = createLeagueView();
 
 	var html = Mustache.to_html(view);
 
@@ -63,25 +67,27 @@ function createLeagueAction(container) {
 
 function editLeaguesAction(data, container) {
 
-	var view = renderEditLeaguesView();
+	var view = editLeaguesView();
 
 	var html = Mustache.to_html(view, {data:data});
 
 	$(container).html(html);
 }
+
 
 function deleteLeaguesAction(data, container) {
 
-	var view = renderDeleteLeaguesView();
+	var view = deleteLeaguesView();
 
 	var html = Mustache.to_html(view, {data:data});
 
 	$(container).html(html);
 }
 
+
 function deleteNamedLeaguesAction(leagueName, container) {
 
-	var view = renderDeleteNamedLeaguesView(leagueName);
+	var view = deleteNamedLeaguesView(leagueName);
 
 	var html = Mustache.to_html(view, {leagueName:leagueName});
 

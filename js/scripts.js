@@ -36,6 +36,119 @@ function setGoalDifference(league) {
 	return league;
 }
 
+function getRemainingFixtures(results) {
+
+	var teams = getDistinctTeams(results);
+	var fixtureList = getFixtureList(teams);
+	var fixturesPlayed = [];
+	var fixturesToPlay = [];
+
+	for (var n = 0; n < results.length; n++) {
+
+		var result = results[n];
+		var fixtureRow = { HomeTeam: result.HomeTeam , AwayTeam: result.AwayTeam, Count: 1 };
+		var fixtureExistsInFixturesAlready = false;
+
+		if (fixturesPlayed.length != 0) {
+			fixtureExistsInFixturesAlready = fixtureExistsInFixtures(fixturesPlayed, fixtureRow);
+		}
+
+		if (fixtureExistsInFixturesAlready) {
+			addOneToExistingFixtureCount(fixturesPlayed, fixtureRow);
+		} else {
+			fixturesPlayed.push(fixtureRow);
+		}
+	}
+
+	for (var i = 0; i < fixturesPlayed.length; i++) {
+
+		var currentFixturePlayed = fixturesPlayed[i];
+
+		for (var a = 0; a < fixtureList.length; a++) {
+			var currentFixtureRow = fixtureList[a];
+			if ((currentFixtureRow.HomeTeam === currentFixturePlayed.HomeTeam) && (currentFixtureRow.AwayTeam === currentFixturePlayed.AwayTeam)) {
+				fixtureList[i].Played = true;
+			}
+		};
+	};
+
+	for (var a = 0; a < fixtureList.length; a++) {
+		var currentFixtureListRow = fixtureList[a];
+		if (currentFixtureListRow.Played) {
+			fixturesToPlay.push({ HomeTeam: currentFixtureListRow.HomeTeam, AwayTeam: currentFixtureListRow.AwayTeam });
+		}
+	};	
+
+	return fixturesToPlay;
+}
+
+
+function getFixtureList(teams) {
+
+	var completeFixtures = [];
+	var teamsCopy = teams;
+
+	for (var i = 0; i < teams.length; i++) {
+
+		var currentTeam = teams[i].toString();
+
+		for (var n = 0; n < teamsCopy.length; n++) {
+
+			var currentTeamFromCopy = teamsCopy[n].toString();
+
+			if (currentTeamFromCopy != currentTeam) {
+
+				var homeFixture = { HomeTeam: currentTeam, AwayTeam: currentTeamFromCopy, Played: false };
+				var awayFixture = { HomeTeam: currentTeamFromCopy, AwayTeam: currentTeam, Played: false };
+
+				var fixtureAlreadyCreated = false;
+
+				for (var x = 0; x < completeFixtures.length; x++) {
+					if ((completeFixtures[x].HomeTeam === homeFixture.HomeTeam) && (completeFixtures[x].AwayTeam === homeFixture.AwayTeam)) {
+						fixtureAlreadyCreated = true;
+					}
+				};
+
+				if (fixtureAlreadyCreated === false) {
+					completeFixtures.push(homeFixture);
+					completeFixtures.push(awayFixture);
+				}
+			}
+		};
+	};
+	return completeFixtures;
+}
+
+
+function fixtureExistsInFixtures(fixturesPlayed, fixtureRow) {
+	var fixtureExists = false;
+
+	for (var n = 0; n < fixturesPlayed.length; n++) {
+
+		var currentFixturesRow = fixturesPlayed[n];
+
+		if ((currentFixturesRow.HomeTeam === fixtureRow.HomeTeam) && (currentFixturesRow.AwayTeam === fixtureRow.AwayTeam)) {
+			fixtureExists = true;
+		}
+	};
+	return fixtureExists;
+}
+
+
+function addOneToExistingFixtureCount(fixtures, fixtureRow) {
+
+	for (var n = 0; n < fixtures.length; n++) {
+
+		var currentFixturesRow = fixtures[n];
+
+		if ((currentFixturesRow.HomeTeam === fixtureRow.HomeTeam) && (currentFixturesRow.AwayTeam === fixtureRow.AwayTeam)) {
+			fixtures[n].Count += 1;
+		}
+	};
+
+}
+
+
 
 function getLeagueTable(teams,data) {
 

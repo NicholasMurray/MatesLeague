@@ -61,7 +61,9 @@ var matesLeague = $.sammy(function() {
 	    var leagueName = this.params["name"];
 	    var league = getLeague(leagueName);
 
-	    leagueAction(leagueName, league, '#content');
+	    var fixturesRemaining = getRemainingFixtures(league);
+
+	    leagueAction(leagueName, league, fixturesRemaining, '#content');
 	});
 
 

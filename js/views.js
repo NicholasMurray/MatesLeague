@@ -1,5 +1,5 @@
 
-function renderHomeView() {
+function homeView() {
     var view = "<nav class='nav'>" +
             "<ul>" +
                 "<li class='first'><a href='#/view_all_results'>View All Results</a></li>" +
@@ -13,7 +13,7 @@ function renderHomeView() {
 }
 
 
-function renderAllResultsView() {
+function allResultsView() {
     var view = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>All Results</a></li>" +
@@ -25,7 +25,7 @@ function renderAllResultsView() {
 }
 
 
-function renderResultsGetView(leagueName) {
+function resultsGetView(leagueName) {
     var start = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>All Leagues</a></li>" +
@@ -62,48 +62,50 @@ function renderResultsGetView(leagueName) {
 }
 
 
-function renderLeagueView(leagueName) {
-    var start = "<ul class='nav'>" +
+
+function leagueView (leagueName) {
+
+    var startHtml = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>" + leagueName + "</a></li>" +
                             "<li>";
-    var template = "<div class='league'><span class='pos'>Pos</span><span class='team'>Team</span>" +
+
+    var leagueHtml = "<div class='league'><span class='pos'>Pos</span><span class='team'>Team</span>" +
                     "<span class='played'>P</span><span class='for'>F</span><span class='against'>A</span>" +
                     "<span class='gd'>GD</span><span class='pts'>Pts</span><div>" +
-                           "{{#league}}"+
+                           "{{#viewModel.League}}"+
                            "<div class='league_table clear'>" +
                              "<span class='pos'>{{Pos}}</span><span class='team'>{{Team}}</span>" +
                              "<span class='played'>{{Played}}</span><span class='for'>{{For}}</span><span class='against'>{{Against}}</span>" +
                              "<span class='gd'>{{GD}}</span><span class='pts'>{{Points}}</span>" +
                            "</div>"+
-                           "{{/league}}"+
+                           "{{/viewModel.League}}"+
                     "</div>" +
                     "<br />" +
-                        "</li>"+
-                       "<li>";
+                        "</li>" +
+                        "<li>" +
+                        "Next Fixtures<br />";
 
-    var frm = "<form action='#/view_league/" + leagueName + "' method='post'>" +
-                "home<br />" +
-                "team:<input id='home_team' name='home_team' type='text' class='input_medium' />" +
-                " score:<input id='home_score' name='home_score' type='text' class='input_small' />" +
-                "<br />" +
-                "away<br />" +
-                "team:<input id='away_team' name='away_team' type='text' class='input_medium' />" +
-                "score:<input id='away_score' name='away_score' type='text' class='input_small' />" +
-                "<br />" +
-                "<input id='home_team' type='submit' value='add' class='btn' />" +
-                "</form>";
-
-    var end =          "</li>"+
+    var fixturesHtml = "<div class='league clear'>" +
+                           "{{#viewModel.FixturesRemaining}}"+
+                           "<div class='league_table clear'>" +
+                             "<span class='team float_left'>{{HomeTeam}}</span><span class='float_left'>&nbsp;v&nbsp;</span><span class='team float_left'>{{AwayTeam}}</span>" +
+                           "</div>"+
+                           "{{/viewModel.FixturesRemaining}}"+
+                    "</div>"+
+                    "<div class='clear'><br /></div>";
+    
+    var endHtml =   "</li>"+
                     "</ul>";
 
-    var view = (start + template + frm + end);
+    var view = (startHtml + leagueHtml + fixturesHtml + endHtml);
 
     return view;
 }
 
 
-function renderCreateLeagueView() {
+function createLeagueView() {
+
     var start = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>Create a new league</a></li>" +
@@ -126,7 +128,7 @@ function renderCreateLeagueView() {
 }
 
 
-function renderLeaguesView() {
+function leaguesView() {
     var view = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>All Leagues</a></li>" +
@@ -138,7 +140,7 @@ function renderLeaguesView() {
 }
 
 
-function renderEditLeaguesView() {
+function editLeaguesView() {
     var view = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>Select a league to Edit</a></li>" +
@@ -150,7 +152,7 @@ function renderEditLeaguesView() {
 }
 
 
-function renderDeleteLeaguesView() {
+function deleteLeaguesView() {
     var view = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>Select a league to Delete</a></li>" +
@@ -163,7 +165,7 @@ function renderDeleteLeaguesView() {
     return view;
 }
 
-function renderDeleteNamedLeaguesView(leagueName) {
+function deleteNamedLeaguesView(leagueName) {
     var view = "<ul class='nav'>" +
                             "<li class='first'><a href='Javascript:history.back(-1);' class='back'>Back</a></li>" +
                             "<li><a href='Javascript:void();' class='no_arrow'>Delete a League</a></li>" +

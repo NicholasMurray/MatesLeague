@@ -77,3 +77,21 @@ test("getRemainingFixtures Test Two Results Supplied Same Home and Away Teams", 
 	equal(remainingFixtures[1].HomeTeam, "Newcastle", "Passed!");
 	equal(remainingFixtures[1].AwayTeam, "Villa", "Passed!");
 });
+
+
+test("eliminateDuplicates Test", function() {
+
+	// Arrange
+	var teams = [];
+	teams.push("Villa");
+	teams.push("Newcastle");
+	teams.push("ManUtd");
+	teams.push("Villa");
+	teams.push("ManUtd");
+
+	// Arrange
+	var results = eliminateDuplicates(teams);
+
+	// Assert
+	equal(results.length, 3, "Passed!");
+});

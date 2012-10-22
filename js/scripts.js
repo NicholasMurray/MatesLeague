@@ -40,8 +40,24 @@ function getRemainingFixtures(results) {
 
 	var teams = getDistinctTeams(results);
 	var fixtureList = getFixtureList(teams);
-	var fixturesPlayed = [];
 	var fixturesToPlay = [];
+
+	fixtureList = getFixtureListWithPlayedGamesMarked(results, fixtureList);
+
+	for (var a = 0; a < fixtureList.length; a++) {
+		var currentFixtureListRow = fixtureList[a];
+		if (!(currentFixtureListRow.Played)) {
+			fixturesToPlay.push({ HomeTeam: currentFixtureListRow.HomeTeam, AwayTeam: currentFixtureListRow.AwayTeam });
+		}
+	};	
+
+	return fixturesToPlay;
+}
+
+
+function getFixtureListWithPlayedGamesMarked(results, fixtureList) {
+
+	var fixturesPlayed = [];
 
 	for (var n = 0; n < results.length; n++) {
 
@@ -60,6 +76,7 @@ function getRemainingFixtures(results) {
 		}
 	}
 
+	// find and mark fixtures already played
 	for (var i = 0; i < fixturesPlayed.length; i++) {
 
 		var currentFixturePlayed = fixturesPlayed[i];
@@ -67,19 +84,12 @@ function getRemainingFixtures(results) {
 		for (var a = 0; a < fixtureList.length; a++) {
 			var currentFixtureRow = fixtureList[a];
 			if ((currentFixtureRow.HomeTeam === currentFixturePlayed.HomeTeam) && (currentFixtureRow.AwayTeam === currentFixturePlayed.AwayTeam)) {
-				fixtureList[i].Played = true;
+				fixtureList[a].Played = true;
 			}
 		};
 	};
 
-	for (var a = 0; a < fixtureList.length; a++) {
-		var currentFixtureListRow = fixtureList[a];
-		if (currentFixtureListRow.Played) {
-			fixturesToPlay.push({ HomeTeam: currentFixtureListRow.HomeTeam, AwayTeam: currentFixtureListRow.AwayTeam });
-		}
-	};	
-
-	return fixturesToPlay;
+	return fixtureList;
 }
 
 

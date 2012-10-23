@@ -1,10 +1,25 @@
 
 
 var resultsTestData = [];
-	resultsTestData.push({ Id: 1, HomeTeam: "Villa", HomeScore: 2, AwayTeam: "Newcastle", AwayScore: 1 });
-	resultsTestData.push({ Id: 2, HomeTeam: "Newcastle", HomeScore: 2, AwayTeam: "Villa", AwayScore: 1 });
-	resultsTestData.push({ Id: 3, HomeTeam: "ManUtd", HomeScore: 0, AwayTeam: "Newcastle", AwayScore: 1 });
-	resultsTestData.push({ Id: 4, HomeTeam: "Villa", HomeScore: 2, AwayTeam: "Newcastle", AwayScore: 1 });
+resultsTestData.push({ Id: 1, HomeTeam: "Villa", HomeScore: 2, AwayTeam: "Newcastle", AwayScore: 1 });
+resultsTestData.push({ Id: 2, HomeTeam: "Newcastle", HomeScore: 2, AwayTeam: "Villa", AwayScore: 1 });
+resultsTestData.push({ Id: 3, HomeTeam: "ManUtd", HomeScore: 0, AwayTeam: "Newcastle", AwayScore: 1 });
+resultsTestData.push({ Id: 4, HomeTeam: "Villa", HomeScore: 2, AwayTeam: "Newcastle", AwayScore: 1 });
+
+var teamsTestData = [];
+teamsTestData.push("Villa");
+teamsTestData.push("Newcastle");
+teamsTestData.push("ManUtd");
+teamsTestData.push("Villa");
+teamsTestData.push("ManUtd");
+
+var fixturesTestData = [];
+fixturesTestData.push({ HomeTeam: "Villa", AwayTeam: "Newcastle", Played: false });
+fixturesTestData.push({ HomeTeam: "Newcastle", AwayTeam: "Villa", Played: false });
+
+var leagueTestData = [];
+leagueTestData.push(resultsTestData[0]);
+
 
 test("getHomePoints Test", function() {
 	
@@ -87,12 +102,7 @@ test("getRemainingFixtures Test Two Results Supplied Same Home and Away Teams", 
 test("getDistinctTeams Test", function() {
 
 	// Arrange
-	var teams = [];
-	teams.push("Villa");
-	teams.push("Newcastle");
-	teams.push("ManUtd");
-	teams.push("Villa");
-	teams.push("ManUtd");
+	var teams = teamsTestData;
 
 	// Arrange
 	var results = eliminateDuplicates(teams);
@@ -105,10 +115,7 @@ test("getDistinctTeams Test", function() {
 test("getLeagueTable Test", function() {
 
 	// Arrange
-	var teams = [];
-	teams.push("Villa");
-	teams.push("Newcastle");
-	teams.push("ManUtd");
+	var teams = teamsTestData;
 	var results = resultsTestData;
 
 	// Act
@@ -138,28 +145,61 @@ test("addOneToExistingFixtureCount Test", function() {
 test("fixtureExistsInFixtures Test", function() {
 
 	// Arrange
-
+	var fixtures = [];
+	fixtures.push({ HomeTeam: "Villa", AwayTeam: "Newcastle", Count: 1});
+	var fixtureRow = { HomeTeam: "Villa", AwayTeam: "Newcastle", Count: 1};
 
 	// Act
-
+	var fixtureExists = fixtureExistsInFixtures(fixtures, fixtureRow);
 
 	// Assert
-
+	equal(fixtureExists, true, "Passed!");
 });
 
 
 test("getFixtureList Test", function() {
 
+	// Arrange
+	var teams = []
+	teams.push(teamsTestData[0]);
+	teams.push(teamsTestData[1]);
+	teams.push(teamsTestData[2]);
+
+	// Act
+	var fixtures = getFixtureList(teams);
+
+	// Assert
+	equal(fixtures[0].HomeTeam, "Villa", "Passed!");
+	equal(fixtures[0].AwayTeam, "Newcastle", "Passed!");
 });
 
 
 test("getFixtureListWithPlayedGamesMarked Test", function() {
 
+	// Arrange
+	var results = [];
+	results.push(resultsTestData[0]);
+	var fixtures = fixturesTestData;
+
+	// Act
+	var fixtures = getFixtureListWithPlayedGamesMarked(results, fixtures);
+
+	// Assert
+	equal(fixtures[0].Played, true, "Passed!");
 });
 
 
 test("getRemainingFixtures Test", function() {
 
+	// Arrange
+	var league = leagueTestData;
+
+	// Act
+	var fixturesRemaining = getRemainingFixtures(league);
+
+	// Assert
+	equal(fixturesRemaining[0].HomeTeam, "Newcastle", "Passed!");
+	equal(fixturesRemaining[0].AwayTeam, "Villa", "Passed!");
 });
 
 // setGoalDifference
@@ -176,9 +216,7 @@ test("getRemainingFixtures Test", function() {
 test("findById Test", function() {
 
 	// Arrange
-	var results = [];
-	results.push({ Id: 1, HomeTeam: "Villa", HomeScore: 2, AwayTeam: "Newcastle", AwayScore: 1 });
-	results.push({ Id: 2, HomeTeam: "Newcastle", HomeScore: 0, AwayTeam: "Villa", AwayScore: 1 });
+	var results = resultsTestData;
 
 	// Act
 	var result = findById(results, 2);
@@ -191,12 +229,7 @@ test("findById Test", function() {
 test("eliminateDuplicates Test", function() {
 
 	// Arrange
-	var teams = [];
-	teams.push("Villa");
-	teams.push("Newcastle");
-	teams.push("ManUtd");
-	teams.push("Villa");
-	teams.push("ManUtd");
+	var teams = teamsTestData;
 
 	// Arrange
 	var results = eliminateDuplicates(teams);

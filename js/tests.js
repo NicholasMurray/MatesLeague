@@ -200,6 +200,7 @@ test("getRemainingFixtures Test", function() {
 	// Assert
 	equal(fixturesRemaining[0].HomeTeam, "Newcastle", "Passed!");
 	equal(fixturesRemaining[0].AwayTeam, "Villa", "Passed!");
+	
 });
 
 // setGoalDifference

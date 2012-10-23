@@ -155,7 +155,6 @@ function addOneToExistingFixtureCount(fixtures, fixtureRow) {
 			fixtures[n].Count += 1;
 		}
 	};
-
 }
 
 
@@ -174,7 +173,6 @@ function getLeagueTable(teams,data) {
     var awayTeam = '';
     var homeScore = '';
     var awayScore = '';
-
 
 	for (var key in data) {
 	   var obj = data[key];
@@ -263,9 +261,9 @@ function eliminateDuplicates(arr) {
 }
 
 
-function findById(source, id) {
+function findById(source, Id) {
     return source.filter(function( obj ) {
-        return +obj.id === +id;
+        return +obj.Id === +Id;
     })[ 0 ];
 }
 

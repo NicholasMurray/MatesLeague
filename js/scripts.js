@@ -30,16 +30,20 @@ function convertResultsToLeague(data) {
 
 
 function setGoalDifference(league) {
-	for (var l in league) {
-		league[l].GD = (league[l].For + league[l].Against);
-	}
+	for (var i = 0; i < league.length; i++) {
+		league[i].GD = (league[i].For - league[i].Against);
+	};
 	return league;
 }
 
 function getRemainingFixtures(results) {
 
 	var teams = getDistinctTeams(results);
-	var fixtureList = getFixtureList(teams);
+
+	var mostPlayedFixtureCount = getMostPlayedFixtureCount(results);
+
+
+	var fixtureList = getFixtureList(teams,mostPlayedFixtureCount);
 	var fixturesToPlay = [];
 
 	fixtureList = getFixtureListWithPlayedGamesMarked(results, fixtureList);
@@ -51,14 +55,77 @@ function getRemainingFixtures(results) {
 		}
 	};	
 
+	if (fixturesToPlay.length === 0){
+		for (var i = 0; i < fixtureList.length; i++) {
+			var currentFixtureListRow = fixtureList[i];
+			fixturesToPlay.push({ HomeTeam: currentFixtureListRow.HomeTeam, AwayTeam: currentFixtureListRow.AwayTeam });
+		};
+	}
+/*
+	for (var x = 1; x < mostPlayedFixtureCount; x++) {
+		var currentFixturesToPlay = [];
+		currentFixturesToPlay = fixturesToPlay;
+		fixturesToPlay.push.apply(fixturesToPlay, currentFixturesToPlay);
+	};
+*/
 	return fixturesToPlay;
 }
 
 
-function getFixtureListWithPlayedGamesMarked(results, fixtureList) {
+function getMostPlayedFixtureCount(results) {
 
+	var mostPlayedFixtureCount = 0;
 	var fixturesPlayed = [];
 
+	for (var i = 0; i < results.length; i++) {
+		
+		var result = results[i];
+		var fixtureRow = { HomeTeam: result.HomeTeam , AwayTeam: result.AwayTeam, Count: 1 };
+		var fixtureExistsInFixturesAlready = false;
+
+		if (fixturesPlayed.length != 0) {
+			fixtureExistsInFixturesAlready = fixtureExistsInFixtures(fixturesPlayed, fixtureRow);
+		}
+
+		if (fixtureExistsInFixturesAlready) {
+			addOneToExistingFixtureCount(fixturesPlayed, fixtureRow);
+		} else {
+			fixturesPlayed.push(fixtureRow);
+		}
+	};
+
+	fixturesPlayed.sort(function(a,b) { a.Played > b.Played });
+
+	mostPlayedFixtureCount = fixturesPlayed[0].Count;
+
+	return mostPlayedFixtureCount;
+}
+
+
+function getFixtureListWithPlayedGamesMarked(results, fixtureList) {
+	//var fixturesPlayed = [];
+
+	for (var i = 0; i < results.length; i++) {
+
+		var currentResult = { Id: results[i].Id, HomeTeam: results[i].HomeTeam, HomeScore: results[i].HomeScore, AwayTeam: results[i].AwayTeam, AwayScore: results[i].AwayScore };
+
+		for (var n = 0; n < fixtureList.length; n++) {
+
+			var currentFixture = fixtureList[n];	
+
+			if (!(currentFixture.Played)) {
+
+				if ((currentFixture.HomeTeam === currentResult.HomeTeam) && (currentFixture.AwayTeam === currentResult.AwayTeam)) {
+
+					fixtureList[n].Played = true;
+					break;
+				}
+			}
+		};
+	};
+	return fixtureList;
+
+/*
 	for (var n = 0; n < results.length; n++) {
 
 		var result = results[n];
@@ -88,16 +155,67 @@ function getFixtureListWithPlayedGamesMarked(results, fixtureList) {
 			}
 		};
 	};
-
+*/
 	return fixtureList;
 }
 
 
-function getFixtureList(teams) {
+function getFixtureList(teams, mostPlayedFixtureCount) {
 
-	var completeFixtures = [];
+	var homeAndAwayFixtures = [];
 	var teamsCopy = teams;
+	var fixtureId = 0;
 
+	for (var i = 0; i < teams.length; i++) {
+
+		var currentTeam = teams[i].toString();
+
+		for (var n = 0; n < teamsCopy.length; n++) {
+
+			var currentTeamFromCopy = teamsCopy[n].toString();
+
+			if (currentTeam != currentTeamFromCopy) {
+				var fixture = { Id: fixtureId, HomeTeam: currentTeam, AwayTeam: currentTeamFromCopy, Played: false };
+				homeAndAwayFixtures.push(fixture);
+				fixtureId++;
+			}
+		};
+	};
+
+	if (mostPlayedFixtureCount <= 1) {
+		return homeAndAwayFixtures;
+	}
+
+	fixtureId = 0;
+	var fixtures = [];
+	for (var x = 0; x < mostPlayedFixtureCount; x++) {
+		for (var i = 0; i < homeAndAwayFixtures.length; i++) {
+
+			var currentFixture = homeAndAwayFixtures[i];
+			
+			fixtures.push({ Id: fixtureId, HomeTeam: currentFixture.HomeTeam, AwayTeam: currentFixture.AwayTeam, Played: currentFixture.Played });
+			fixtureId++;
+		};
+	};
+	return fixtures;
+
+	//return homeAndAwayFixtures;
+
+
+	// for (var x = 1; x < mostPlayedFixtureCount; x++) {
+	// 	var fixtures = [];
+	// 	fixtures = homeAndAwayFixtures;
+	// 	homeAndAwayFixtures.push.apply(homeAndAwayFixtures, fixtures);
+	// };
+
+
+	// for (var a = 0; a < homeAndAwayFixtures.length; a++) {
+	// 	homeAndAwayFixtures[a].Id = a;
+	// };
+
+	//return homeAndAwayFixtures;
+
+/*
 	for (var i = 0; i < teams.length; i++) {
 
 		var currentTeam = teams[i].toString();
@@ -114,19 +232,30 @@ function getFixtureList(teams) {
 				var fixtureAlreadyCreated = false;
 
 				for (var x = 0; x < completeFixtures.length; x++) {
-					if ((completeFixtures[x].HomeTeam === homeFixture.HomeTeam) && (completeFixtures[x].AwayTeam === homeFixture.AwayTeam)) {
+					if ((homeAndAwayFixtures[x].HomeTeam === homeFixture.HomeTeam) && (homeAndAwayFixtures[x].AwayTeam === homeFixture.AwayTeam)) {
 						fixtureAlreadyCreated = true;
 					}
 				};
 
 				if (fixtureAlreadyCreated === false) {
-					completeFixtures.push(homeFixture);
-					completeFixtures.push(awayFixture);
+					homeAndAwayFixtures.push(homeFixture);
+					homeAndAwayFixtures.push(awayFixture);
 				}
 			}
 		};
 	};
+
+	completeFixtures = homeAndAwayFixtures;
+
+	if (!(completeFixtures.length === (teams.length * mostPlayedFixtureCount))) {
+		for (var i = 0; i < mostPlayedFixtureCount; i++) {
+			completeFixtures.push.apply(completeFixtures, homeAndAwayFixtures);
+		};
+	}
+
 	return completeFixtures;
+*/
+	
 }
 
 

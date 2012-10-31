@@ -94,6 +94,21 @@ a.no_arrow {
 .margin_bottom_30 { margin-bottom: 30px; }
 
 
+.hideLeft{
+    position:relative;
+    height:200px;
+    width:200px;
+    background:blue;
+    display:block;
+    -webkit-transition:all 1s ease;
+    -moz-transition:all 1s ease;
+}
+
+.hideLeft:focus{
+    left:-200px;
+}
+
+
 
 
 
